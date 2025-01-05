@@ -1,59 +1,42 @@
 # NgElements
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.0.6.
+This is a proof-of-concept application for demonstrating that Angular can be used to create Web Components.
 
-## Development server
+The project contains two entry points (versions of src/main.ts) and these are used by "ng build" and "ng serve" respectively. To get this to work, Angular.json was changed a fair amount, and tsconfig.app.json was replaced by tsconfig.build.json and tsconfig.serve.json respectively.
 
-To start a local development server, run:
+The project contains Angular Material.
 
-```bash
-ng serve
-```
+## Building the Web Component for Production
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+To build the web component, just use "ng build". The output folder contains a main.js and style.css
 
-## Code scaffolding
+## Serving the App for Local Development
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+To serve the application, use:
 
-```bash
-ng generate component component-name
-```
+ng serve -o
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Serving the test harness
 
-```bash
-ng generate --help
-```
+When working locally, just use "ng serve -o". There's nothing special about this; the AppComponent acts like a shell/container/test harness for the MfeDemoComponent.
 
-## Building
+## Issues
 
-To build the project run:
+### Zone.js
 
-```bash
-ng build
-```
+When built, main.js contains Zone.js and this may conflict with Zone.js in the host application when the web component is brought into a host application via a script tag.
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Some examples show a microfrontend wiring itself up to the Zone.js of its host if Zone.js is already loaded, otherwise it loads its own Zone.js. This needs more investigation.
 
-## Running unit tests
+### Global Styles
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+Not sure how to deal with global styles. "src/styles.scss" produces a "styles.css" file, and it would be better if this was a "styles.js" file instead.
 
-```bash
-ng test
-```
+### Post Processing
 
-## Running end-to-end tests
+Right now, there's no concatenation of output files. It would be best if the build process could produce a single JS file and in some examples the concat module is used to combine the output JS files into a single file, as a separate build step.
 
-For end-to-end (e2e) testing, run:
+### Testing
 
-```bash
-ng e2e
-```
+Have not tried running Karma, so that might be a TO DO.
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
